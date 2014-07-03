@@ -55,17 +55,39 @@ Sample Output #3
 2
 BD will be optimal substring.
 
-  */
+ */
 object CommonChild {
   def main(args: Array[String]) {
-    for (i <- 1 to Console.readInt()) {
-      println(height(Console.readInt(), 1, x => x * 2, x => x + 1))
-    }
+    val st1 = "HYRRA" //readLine()
+    val st2 = "SALLY" //readLine()
+    val m1 = times(st1.toList).toMap
+    val m2 = times(st2.toList).toMap
+    val common = m1.map { case (char, count) =>
+      val anotherCount = m2.getOrElse(char, 0)
+      (char, Math.min(count, anotherCount))
+    }.filter(p => p._2 > 0)
+    val st1Common = st1.toList.filter(common.contains)
+    val st2Common = st2.toList.filter(common.contains)
+
+    println(st1Common)
+    println(st2Common)
   }
 
-  @tailrec
-  def height(cycles: Int, currentHeight: Int, f: Int => Int, g: Int => Int): Int = cycles match {
-    case 0 => currentHeight
-    case _ => height(cycles - 1, f(currentHeight), g, f)
+  def times(chars: List[Char]): List[(Char, Int)] = chars match {
+    case Nil => Nil
+    case x :: xs =>
+      val (fst, snd) = chars.partition(_ == x)
+      List((x, fst.length)) ++ times(snd)
+  }
+
+  def commonChild(st1: String, st2: String): String = {
+    if (st1 == st2) {
+      st1
+    } else {
+      for (i <- 0 to st1.length) {
+
+      }
+    }
+    ""
   }
 }
